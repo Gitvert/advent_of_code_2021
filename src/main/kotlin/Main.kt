@@ -12,6 +12,8 @@ fun main(args: Array<String>) {
     day2part2()
     day3part1()
     day3part2()
+    day4part1()
+    day4part2()
 }
 
 fun readFile(fileName: String): List<String> {
