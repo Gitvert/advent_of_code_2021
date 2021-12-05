@@ -1,3 +1,8 @@
+fun day2() {
+    day2part1()
+    day2part2()
+}
+
 fun day2part1() {
     val instruments = findInstruments()
 

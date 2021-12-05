@@ -6,16 +6,11 @@ fun main(args: Array<String>) {
     // println("Program arguments: ${args.joinToString()}")
 
     println("solving")
-    day1part1()
-    day1part2()
-    day2part1()
-    day2part2()
-    day3part1()
-    day3part2()
-    day4part1()
-    day4part2()
-    day5part1()
-    day5part2()
+    day1()
+    day2()
+    day3()
+    day4()
+    day5()
 }
 
 fun readFile(fileName: String): List<String> {

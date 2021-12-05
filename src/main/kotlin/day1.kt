@@ -1,3 +1,8 @@
+fun day1() {
+    day1part1()
+    day1part2()
+}
+
 fun day1part1() {
     val answer = findAnswer(getInput())
 

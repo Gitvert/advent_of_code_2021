@@ -1,4 +1,9 @@
-const val SIZE = 1000;
+const val SIZE = 1000
+
+fun day5() {
+    day5part1()
+    day5part2()
+}
 
 fun day5part1() {
     val answer = findAnswer(false)

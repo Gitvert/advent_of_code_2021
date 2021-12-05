@@ -1,3 +1,8 @@
+fun day4() {
+    day4part1()
+    day4part2()
+}
+
 fun day4part1() {
     val lines: List<String> = readFile("day04.txt")
 
