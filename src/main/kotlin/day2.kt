@@ -1,10 +1,12 @@
 fun day2() {
-    day2part1()
-    day2part2()
+    val lines: List<String> = readFile("day02.txt")
+
+    day2part1(lines)
+    day2part2(lines)
 }
 
-fun day2part1() {
-    val instruments = findInstruments()
+fun day2part1(lines: List<String>) {
+    val instruments = findInstruments(lines)
 
     var horizontalPosition = 0
     var depth = 0
@@ -22,8 +24,8 @@ fun day2part1() {
     println("2a: $answer")
 }
 
-fun day2part2() {
-    val instruments = findInstruments()
+fun day2part2(lines: List<String>) {
+    val instruments = findInstruments(lines)
 
     var horizontalPosition = 0
     var depth = 0
@@ -45,9 +47,7 @@ fun day2part2() {
     println("2b: $answer")
 }
 
-fun findInstruments(): List<Pair<String, Int>> {
-    val lines: List<String> = readFile("day02.txt")
-
+fun findInstruments(lines: List<String>): List<Pair<String, Int>> {
     return lines.map {
         val instruction = it.split(" ")
         Pair(instruction[0], Integer.valueOf(instruction[1]))

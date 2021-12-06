@@ -1,25 +1,25 @@
 const val SIZE = 1000
 
 fun day5() {
-    day5part1()
-    day5part2()
+    val lines: List<String> = readFile("day05.txt")
+
+    day5part1(lines)
+    day5part2(lines)
 }
 
-fun day5part1() {
-    val answer = findAnswer(false)
+fun day5part1(lines: List<String>) {
+    val answer = findAnswer(lines, false)
 
     println("5a: $answer")
 }
 
-fun day5part2() {
-    val answer = findAnswer(true)
+fun day5part2(lines: List<String>) {
+    val answer = findAnswer(lines, true)
 
     println("5b: $answer")
 }
 
-fun findAnswer(considerDiagonal: Boolean): Int {
-    val lines: List<String> = readFile("day05.txt")
-
+fun findAnswer(lines: List<String>, considerDiagonal: Boolean): Int {
     val lineSegments: MutableList<LineSegment> = mutableListOf()
     val oceanFloor = initOceanFloor()
 

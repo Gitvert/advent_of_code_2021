@@ -1,11 +1,11 @@
 fun day4() {
-    day4part1()
-    day4part2()
-}
-
-fun day4part1() {
     val lines: List<String> = readFile("day04.txt")
 
+    day4part1(lines)
+    day4part2(lines)
+}
+
+fun day4part1(lines: List<String>) {
     val bingoNumbers: List<Int> = lines[0].split(",").map { Integer.valueOf(it) }
 
     val bingoCards = createBingoCards(lines.subList(2, lines.size-1))
@@ -15,9 +15,7 @@ fun day4part1() {
     println("4a: $answer")
 }
 
-fun day4part2() {
-    val lines: List<String> = readFile("day04.txt")
-
+fun day4part2(lines: List<String>) {
     val bingoNumbers: List<Int> = lines[0].split(",").map { Integer.valueOf(it) }
 
     val bingoCards = createBingoCards(lines.subList(2, lines.size-1))

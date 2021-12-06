@@ -1,16 +1,18 @@
 fun day1() {
-    day1part1()
-    day1part2()
+    val lines: List<String> = readFile("day01.txt")
+
+    day1part1(lines)
+    day1part2(lines)
 }
 
-fun day1part1() {
-    val answer = findAnswer(getInput())
+fun day1part1(lines: List<String>) {
+    val answer = findAnswer(formatInput(lines))
 
     println("1a: $answer")
 }
 
-fun day1part2() {
-    val numbers = getInput()
+fun day1part2(lines: List<String>) {
+    val numbers = formatInput(lines)
     val windows: MutableList<Int> = mutableListOf()
 
     for (i in 0..numbers.size - 3) {
@@ -22,8 +24,7 @@ fun day1part2() {
     println("1b: $answer")
 }
 
-fun getInput(): List<Int> {
-    val lines: List<String> = readFile("day01.txt")
+fun formatInput(lines: List<String>): List<Int> {
     return lines.map { Integer.valueOf(it) }
 }
 

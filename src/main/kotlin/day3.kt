@@ -1,11 +1,11 @@
 fun day3() {
-    day3part1()
-    day3part2()
-}
-
-fun day3part1() {
     val lines: List<String> = readFile("day03.txt")
 
+    day3part1(lines)
+    day3part2(lines)
+}
+
+fun day3part1(lines: List<String>) {
     val zeroes: MutableList<Int> = createZeroesList(lines)
 
     var gammaBinary = ""
@@ -29,9 +29,7 @@ fun day3part1() {
     println("3a: $answer")
 }
 
-fun day3part2() {
-    val lines: List<String> = readFile("day03.txt")
-
+fun day3part2(lines: List<String>) {
     var zeroes: MutableList<Int> = createZeroesList(lines)
     var reducedLines: List<String> = lines.toMutableList()
     var index = 0
