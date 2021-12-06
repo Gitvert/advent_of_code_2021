@@ -1,4 +1,5 @@
 import java.io.File
+import kotlin.system.measureTimeMillis
 
 fun main(args: Array<String>) {
     // Try adding program arguments via Run/Debug configuration.
@@ -6,12 +7,12 @@ fun main(args: Array<String>) {
     // println("Program arguments: ${args.joinToString()}")
 
     println("solving")
-    day1()
-    day2()
-    day3()
-    day4()
-    day5()
-    day6()
+    println("---- Took ${measureTimeMillis{ day1() }} ms to execute ----")
+    println("---- Took ${measureTimeMillis{ day2() }} ms to execute ----")
+    println("---- Took ${measureTimeMillis{ day3() }} ms to execute ----")
+    println("---- Took ${measureTimeMillis{ day4() }} ms to execute ----")
+    println("---- Took ${measureTimeMillis{ day5() }} ms to execute ----")
+    println("---- Took ${measureTimeMillis{ day6() }} ms to execute ----")
 }
 
 fun readFile(fileName: String): List<String> {
