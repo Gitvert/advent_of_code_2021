@@ -14,6 +14,7 @@ fun main(args: Array<String>) {
     println("---- Took ${measureTimeMillis{ day5() }} ms to execute ----")
     println("---- Took ${measureTimeMillis{ day6() }} ms to execute ----")
     println("---- Took ${measureTimeMillis{ day7() }} ms to execute ----")
+    println("---- Took ${measureTimeMillis{ day8() }} ms to execute ----")
 }
 
 fun readFile(fileName: String): List<String> {
