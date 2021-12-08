@@ -16,24 +16,28 @@ fun day8part1(lines: List<String>) {
 }
 
 fun day8part2(lines: List<String>) {
-    val entries = lines.map { Entry(it.split(" | ")[0].split(" "), it.split(" | ")[1].split(" ")) }
+    val entries = lines.map { line ->
+        Entry(
+            line.split(" | ")[0].split(" ").map { it.toCharArray().sorted().joinToString("") },
+            line.split(" | ")[1].split(" ").map { it.toCharArray().sorted().joinToString("") }
+        )
+    }
     val answer = entries.sumOf { decode(it) }
 
     println("8b: $answer")
 }
 
 fun decode(entry: Entry): Int {
-    val signalsToProcess = entry.signals.filter { intArrayOf(5, 6).contains(it.length) }.map { it.toCharArray().sorted().joinToString("") }
+    val signalsToProcess = entry.signals.filter { intArrayOf(5, 6).contains(it.length) }
 
     val digits: MutableList<String> = mutableListOf("TBD", "TBD", "TBD", "TBD", "TBD", "TBD", "TBD", "TBD", "TBD", "TBD")
 
     entry.signals.forEach {
-        val sortedString = it.toCharArray().sorted().joinToString("")
         when (it.length) {
-            2 -> digits[1] = sortedString
-            3 -> digits[7] = sortedString
-            4 -> digits[4] = sortedString
-            7 -> digits[8] = sortedString
+            2 -> digits[1] = it
+            3 -> digits[7] = it
+            4 -> digits[4] = it
+            7 -> digits[8] = it
         }
     }
 
@@ -52,8 +56,7 @@ fun decode(entry: Entry): Int {
     }
 
     val outputDigits = entry.outputs.map {
-        val sortedOutput = it.toCharArray().sorted().joinToString("")
-        val number = digits.indexOf(sortedOutput)
+        val number = digits.indexOf(it)
         if (number == -1) {
             2
         } else {
