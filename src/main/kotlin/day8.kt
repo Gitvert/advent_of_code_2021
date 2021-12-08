@@ -41,14 +41,14 @@ fun decode(entry: Entry): Int {
         }
     }
 
-    signalsToProcess.forEach {
+    signalsToProcess.filter { it.length == 6 }.forEach {
         val number = findNumber(it, digits)
         if (number > -1) {
             digits[number] = it
         }
     }
 
-    signalsToProcess.forEach {
+    signalsToProcess.filter { it.length == 5 }.forEach {
         val number = findNumber(it, digits)
         if (number > -1) {
             digits[number] = it
@@ -56,12 +56,7 @@ fun decode(entry: Entry): Int {
     }
 
     val outputDigits = entry.outputs.map {
-        val number = digits.indexOf(it)
-        if (number == -1) {
-            2
-        } else {
-            number
-        }
+        digits.indexOf(it)
     }
 
     return Integer.valueOf(outputDigits.joinToString(""))
@@ -72,9 +67,9 @@ fun findNumber(pattern: String, digits: MutableList<String>): Int {
         if (pattern.split("").containsAll(digits[1].split(""))) {
             3
         } else if (digits[9].split("").containsAll(pattern.split(""))) {
-            return 5
+            5
         } else {
-            -1
+            2
         }
     } else {
         if (pattern.split("").containsAll(digits[4].split(""))) {
