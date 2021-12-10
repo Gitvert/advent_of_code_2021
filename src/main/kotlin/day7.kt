@@ -1,6 +1,8 @@
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import kotlin.math.abs
 
-fun day7() {
+suspend fun day7() {
     val lines: List<String> = readFile("day07.txt")
 
     day7part1(lines)
@@ -30,23 +32,25 @@ fun day7part1(lines: List<String>) {
     println("7a: $answer")
 }
 
-fun day7part2(lines: List<String>) {
+suspend fun day7part2(lines: List<String>) {
     val positions = lines[0].split(",").map { Integer.valueOf(it) }
     val min = positions.minOrNull() ?: 0
     val max = positions.maxOrNull() ?: 0
 
     var lowestFuelCost = Int.MAX_VALUE
 
-    for (i in min..max) {
-        var cost = 0
-        positions.forEach {
-            cost += calculateFuelCost(it, i)
-        }
+    IntRange(min, max).mapIndexed { index, _ ->
+        GlobalScope.async {
+            var cost = 0
+            positions.forEach {
+                cost += calculateFuelCost(it, index)
+            }
 
-        if (cost < lowestFuelCost) {
-            lowestFuelCost = cost
+            if (cost < lowestFuelCost) {
+                lowestFuelCost = cost
+            }
         }
-    }
+    }.forEach { it.await() }
 
     val answer = lowestFuelCost
 
