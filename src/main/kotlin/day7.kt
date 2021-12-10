@@ -58,15 +58,7 @@ suspend fun day7part2(lines: List<String>) {
 }
 
 fun calculateFuelCost(startPosition: Int, goalPosition: Int): Int {
-    var currentCost = 1
-    var totalCost = 0
-    var distanceMoved = 0
     val distance = abs(startPosition - goalPosition)
 
-    while (distanceMoved < distance) {
-        distanceMoved++
-        totalCost += currentCost++
-    }
-
-    return totalCost
+    return (distance * (distance + 1)) / 2
 }
