@@ -1,5 +1,3 @@
-
-
 fun day10() {
     val lines: List<String> = readFile("day10.txt")
 
