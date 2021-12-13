@@ -29,6 +29,7 @@ suspend fun main(args: Array<String>) {
                 10 -> day10()
                 11 -> day11()
                 12 -> day12()
+                13 -> day13()
             }
         }
         println("Done")
@@ -47,6 +48,7 @@ suspend fun main(args: Array<String>) {
     println("---- Took ${measureTimeMillis{ day10() }} ms to execute ----")
     println("---- Took ${measureTimeMillis{ day11() }} ms to execute ----")
     println("---- Took ${measureTimeMillis{ day12() }} ms to execute ----")
+    println("---- Took ${measureTimeMillis{ day13() }} ms to execute ----")
     println("Done")
 }
 
