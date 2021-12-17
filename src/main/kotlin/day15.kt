@@ -43,9 +43,17 @@ fun getBigCave(lines: List<String>): Array<IntArray> {
         row.forEachIndexed { j, _ ->
             cave[i][j] = Integer.valueOf(row[j].toString())
             for (k in 1..4) {
-                cave[i][j + size * k] = getNextNumber(cave[i][j])
+                cave[i][j + size * k] = getNextNumber(cave[i][j + size * (k - 1)])
             }
 
+        }
+    }
+
+    for (k in 1..4) {
+        for (i in 0 until size) {
+            for (j in 0 until size * 5) {
+                    cave[i + size * k][j] = getNextNumber(cave[i + size * (k - 1)][j])
+            }
         }
     }
 
@@ -54,7 +62,7 @@ fun getBigCave(lines: List<String>): Array<IntArray> {
 
 fun getNextNumber(number: Int): Int {
     return when (number) {
-        9 -> 0
+        9 -> 1
         else -> number + 1
     }
 }
