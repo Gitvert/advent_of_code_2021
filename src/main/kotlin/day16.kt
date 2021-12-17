@@ -66,6 +66,63 @@ fun parseTotalVersion(message: String): Int {
     return versionSize
 }
 
+fun parseValue(message: String, parseStartPosition: Int): Int {
+    var parserPosition = parseStartPosition
+    var values = mutableListOf<Int>()
+
+    while (true) {
+        if (message.substring(parserPosition).contains("^0+$".toRegex())) {
+            break
+        }
+
+        val version = getIntValue(message, parserPosition, parserPosition + 3)
+        parserPosition += 3
+        val typeId = getIntValue(message, parserPosition, parserPosition + 3)
+        parserPosition += 3
+
+        if (typeId == 4) {
+            var lastNumberIndicatorBit = 1
+            var literalValue = ""
+
+            while (lastNumberIndicatorBit != 0) {
+                lastNumberIndicatorBit = getIntValue(message, parserPosition, parserPosition + 1)
+                parserPosition += 1
+
+                literalValue = literalValue.plus(message.substring(parserPosition, parserPosition + 4))
+                parserPosition += 4
+            }
+
+            values.add(Integer.valueOf(literalValue, 2))
+
+        } else {
+            val subPacketBit = getIntValue(message, parserPosition, parserPosition + 1)
+            parserPosition += 1
+
+            if (subPacketBit == 0) {
+                val subPacketsLength = getIntValue(message, parserPosition, parserPosition + 15)
+                parserPosition += 15
+
+            } else {
+                val noOfSubPackets = getIntValue(message, parserPosition, parserPosition + 11)
+                parserPosition += 11
+
+            }
+
+            when (typeId) {
+                0 -> 1
+                1 -> 2
+                2 -> 3
+                3 -> 4
+                5 -> 6
+                6 -> 7
+                7 -> 8
+            }
+        }
+    }
+
+    return 0
+}
+
 fun getIntValue(message: String, startPosition: Int, endPosition: Int): Int {
     return Integer.valueOf(message.substring(startPosition, endPosition), 2)
 }
