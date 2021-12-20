@@ -18,11 +18,11 @@ fun day20part2(lines: List<String>) {
 }
 
 fun getImage(lines: List<String>): Array<CharArray> {
-    val image = Array(500) { CharArray(500) { '.' } }
+    val image = Array(300) { CharArray(300) { '.' } }
 
     for (i in lines.indices) {
         for (j in lines.indices) {
-            image[i + 250][j + 250] = lines[i][j]
+            image[i + 100][j + 100] = lines[i][j]
         }
     }
 
@@ -35,8 +35,8 @@ fun enhanceImage(lines: List<String>, passes: Int): Int {
 
     val image = getImage(imageData)
 
-    val enhancedImage = Array(500) { CharArray(500) { '.' } }
-    val enhancedImage2 = Array(500) { CharArray(500) { '.' } }
+    val enhancedImage = Array(300) { CharArray(300) { '.' } }
+    val enhancedImage2 = Array(300) { CharArray(300) { '.' } }
 
     for (enhancementLoop in 0 until passes) {
 
@@ -52,7 +52,7 @@ fun enhanceImage(lines: List<String>, passes: Int): Int {
 
     for (i in image.indices) {
         for (j in image.indices) {
-            if (i < 100 || j < 100 || i > 400 || j > 400)
+            if (i < 50 || j < 50 || i > 250 || j > 250)
                 enhancedImage2[i][j] = '.'
         }
     }
