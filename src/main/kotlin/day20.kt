@@ -39,11 +39,9 @@ fun enhanceImage(lines: List<String>, passes: Int): Int {
     val enhancedImage2 = Array(500) { CharArray(500) { '.' } }
 
     for (enhancementLoop in 0 until passes) {
-        val toImage: Array<CharArray>
-        val fromImage: Array<CharArray>
 
-        toImage = (if (enhancementLoop % 2 == 0) {enhancedImage} else {enhancedImage2}).clone()
-        fromImage = (if (enhancementLoop % 2 != 0) {enhancedImage} else if (enhancementLoop == 0) {image} else {enhancedImage2}).clone()
+        val toImage: Array<CharArray> = (if (enhancementLoop % 2 == 0) {enhancedImage} else {enhancedImage2}).clone()
+        val fromImage: Array<CharArray> = (if (enhancementLoop % 2 != 0) {enhancedImage} else if (enhancementLoop == 0) {image} else {enhancedImage2}).clone()
 
         for (i in 1..image.size - 2) {
             for (j in 1..image.size - 2) {
