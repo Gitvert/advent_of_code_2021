@@ -8,6 +8,18 @@ fun day21() {
 var dieRolls = 0
 var currentDieValue = 1
 
+val rollOccurrences = mapOf(
+    Pair(3, 1),
+    Pair(4, 3),
+    Pair(5, 6),
+    Pair(6, 7),
+    Pair(7, 6),
+    Pair(8, 3),
+    Pair(9, 1),
+)
+
+var scoreAtTurn = IntArray(22) { 0 }
+
 fun day21part1(lines: List<String>) {
     var player1Turn = true
 
