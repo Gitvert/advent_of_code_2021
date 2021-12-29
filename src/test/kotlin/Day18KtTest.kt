@@ -34,4 +34,14 @@ internal class Day18KtTest {
 
         assertEquals("[[3,[2,[8,0]]],[9,[5,[7,0]]]]", explodeSnailFishNumber("[[3,[2,[8,0]]],[9,[5,[4,[3,2]]]]]"))
     }
+
+    @Test
+    fun testSplitNumber() {
+        assertEquals("[7,8]", splitNumber(15))
+    }
+
+    @Test
+    fun testSplit() {
+        assertEquals("[[[[0,7],4],[[7,8],[0,13]]],[1,1]]", splitSnailFishNumber("[[[[0,7],4],[15,[0,13]]],[1,1]]"))
+    }
 }

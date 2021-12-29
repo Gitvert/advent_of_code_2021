@@ -1,3 +1,7 @@
+import kotlin.math.ceil
+import kotlin.math.floor
+import kotlin.math.roundToInt
+
 fun day18() {
     val lines: List<String> = readFile("day18.txt")
 
@@ -23,6 +27,30 @@ fun day18part2(lines: List<String>) {
 
 fun addSnailFishNumber(left: String, right: String): String {
     return "[$left,$right]"
+}
+
+fun splitSnailFishNumber(number: String): String {
+    var lastWasNumber = false
+
+    number.forEachIndexed { index, it ->
+        lastWasNumber = if (it.isDigit()) {
+            if (lastWasNumber) {
+                return number.replaceRange(index - 1..index, splitNumber(Integer.valueOf(number.substring(index - 1..index))))
+            }
+            true
+        } else {
+            false
+        }
+    }
+
+    return number
+}
+
+fun splitNumber(number: Int): String {
+    val first = floor(number / 2.0).toInt()
+    val second = ceil(number / 2.0).toInt()
+
+    return "[$first,$second]"
 }
 
 fun explodeSnailFishNumber(number: String): String {
