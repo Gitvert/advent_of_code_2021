@@ -26,7 +26,23 @@ fun day18part2(lines: List<String>) {
 }
 
 fun addSnailFishNumber(left: String, right: String): String {
-    return "[$left,$right]"
+    var newNumber = "[$left,$right]"
+
+    while (true) {
+        val startOfRoundNumber = newNumber
+        newNumber = explodeSnailFishNumber(newNumber)
+        if (startOfRoundNumber != newNumber) {
+            continue
+        }
+        newNumber = splitSnailFishNumber(newNumber)
+        if (startOfRoundNumber != newNumber) {
+            continue
+        }
+
+        break
+    }
+
+    return newNumber
 }
 
 fun splitSnailFishNumber(number: String): String {
