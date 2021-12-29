@@ -3,6 +3,11 @@ import kotlin.test.assertEquals
 
 internal class Day18KtTest {
 
+    @Test
+    fun testAdd() {
+        assertEquals("[[[[[4,3],4],4],[7,[[8,4],9]]],[1,1]]", addSnailFishNumber("[[[[4,3],4],4],[7,[[8,4],9]]]", "[1,1]"))
+    }
+
      @Test
      fun testExplodeWithNoLeftNumbers() {
          assertEquals("[[[[0,9],2],3],4]", explodeSnailFishNumber("[[[[[9,8],1],2],3],4]"))
