@@ -18,7 +18,22 @@ fun day18part1(lines: List<String>) {
 }
 
 fun day18part2(lines: List<String>) {
-    val answer = "TBD"
+    var maxMagnitude = -1
+
+    for (i in lines.indices) {
+        for (j in lines.indices) {
+            if (i == j) {
+                continue
+            }
+            val sum = addSnailFishNumber(lines[i], lines[j])
+            val magnitude = getMagnitudeOfNumber(sum)
+            if (magnitude > maxMagnitude) {
+                maxMagnitude = magnitude
+            }
+        }
+    }
+
+    val answer = maxMagnitude
 
     println("18b: $answer")
 }
