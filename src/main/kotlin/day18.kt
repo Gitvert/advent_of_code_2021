@@ -112,25 +112,25 @@ fun explodeSnailFishNumber(number: String): String {
     var leftSide  = number.substring(0..explodeIndex - 2)
     var rightSide = number.substring(endExplodeIndex until number.length)
 
-    val leftExplodeIndex = findLastNumberIndex(number.substring(0 until explodeIndex))
-    val rightExplodeIndex = findFirstNumberIndex(number.substring(endExplodeIndex until number.length))
+    val leftExplodeIndex = findLastNumberEndIndex(number.substring(0 until explodeIndex))
+    val rightExplodeIndex = findFirstNumberStartIndex(number.substring(endExplodeIndex until number.length))
 
     if (leftExplodeIndex > 0) {
-        //TODO: Support values larger than 9
-        val newNumber = Integer.valueOf(number[leftExplodeIndex].toString()) + leftValue
-        leftSide = leftSide.replaceRange(leftExplodeIndex..leftExplodeIndex, newNumber.toString())
+        val leftExplodeIndexStart = findNumberStartIndex(number.substring(0..leftExplodeIndex), leftExplodeIndex)
+        val newNumber = Integer.valueOf(number.substring(leftExplodeIndexStart..leftExplodeIndex)) + leftValue
+        leftSide = leftSide.replaceRange(leftExplodeIndexStart..leftExplodeIndex, newNumber.toString())
     }
 
     if (rightExplodeIndex > 0) {
-        //TODO: Support values larger than 9
-        val newNumber = Integer.valueOf(rightSide[rightExplodeIndex].toString()) + rightValue
-        rightSide = rightSide.replaceRange(rightExplodeIndex..rightExplodeIndex, newNumber.toString())
+        val rightExplodeIndexEnd = findNumberEndIndex(rightSide.substring(rightExplodeIndex until rightSide.length), rightExplodeIndex)
+        val newNumber = Integer.valueOf(rightSide.substring(rightExplodeIndex..rightExplodeIndexEnd)) + rightValue
+        rightSide = rightSide.replaceRange(rightExplodeIndex..rightExplodeIndexEnd, newNumber.toString())
     }
 
     return leftSide + "0" + rightSide
 }
 
-fun findLastNumberIndex(number: String): Int {
+fun findLastNumberEndIndex(number: String): Int {
     var lastNumberIndex = -1
 
     number.forEachIndexed { index, it ->
@@ -142,7 +142,7 @@ fun findLastNumberIndex(number: String): Int {
     return lastNumberIndex
 }
 
-fun findFirstNumberIndex(number: String): Int {
+fun findFirstNumberStartIndex(number: String): Int {
     number.forEachIndexed { index, it ->
         if (it.isDigit()) {
             return index
@@ -150,4 +150,24 @@ fun findFirstNumberIndex(number: String): Int {
     }
 
     return -1
+}
+
+fun findNumberEndIndex(number: String, startIndex: Int): Int {
+    number.forEachIndexed { index, it ->
+        if (!it.isDigit()) {
+            return index - 1 + startIndex
+        }
+    }
+
+    return startIndex
+}
+
+fun findNumberStartIndex(number: String, endIndex: Int): Int {
+    number.reversed().forEachIndexed { index, it ->
+        if (!it.isDigit()) {
+            return endIndex - index + 1
+        }
+    }
+
+    return endIndex
 }
