@@ -181,4 +181,14 @@ internal class Day18KtTest {
             ))
         )
     }
+
+    @Test
+    fun testGetMagnitudeOfSmallNumber() {
+        assertEquals(143, getMagnitudeOfNumber("[[1,2],[[3,4],5]]"))
+    }
+
+    @Test
+    fun testGetMagnitudeOfLargeNumber() {
+        assertEquals(4140, getMagnitudeOfNumber("[[[[6,6],[7,6]],[[7,7],[7,0]]],[[[7,7],[7,7]],[[7,8],[9,9]]]]"))
+    }
 }

@@ -10,7 +10,9 @@ fun day18() {
 
 fun day18part1(lines: List<String>) {
 
-    val answer = sumListOfSnailFishNumbers(lines)
+    val sum = sumListOfSnailFishNumbers(lines)
+
+    val answer = getMagnitudeOfNumber(sum)
 
     println("18a: $answer")
 }
@@ -69,6 +71,36 @@ fun splitSnailFishNumber(number: String): String {
         } else {
             false
         }
+    }
+
+    return number
+}
+
+fun getMagnitudeOfNumber(number: String): Int {
+    var newNumber = number
+
+    while (true) {
+        val startOfRoundNumber = newNumber
+        newNumber = getInnerMagnitude(newNumber)
+        if (newNumber == startOfRoundNumber) {
+            break
+        }
+    }
+
+    return Integer.valueOf(newNumber)
+}
+
+fun getInnerMagnitude(number: String): String {
+    val regex = "\\d+,\\d+".toRegex()
+    val result = regex.find(number)
+
+    if (result != null) {
+        val range = result.range
+        val values = number.substring(range).split(",")
+        val pair = Pair(Integer.valueOf(values[0]), Integer.valueOf(values[1]))
+        val sum = pair.first * 3 + pair.second * 2
+
+        return number.replaceRange(range.first - 1..range.last + 1, sum.toString())
     }
 
     return number
