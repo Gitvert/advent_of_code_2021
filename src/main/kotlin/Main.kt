@@ -6,7 +6,7 @@ suspend fun main(args: Array<String>) {
     // Learn more about running applications: https://www.jetbrains.com/help/idea/running-applications.html.
    //  println("Program arguments: ${args.joinToString()}")
 
-    /*val intArgs: List<Int> = args.map { Integer.valueOf(it) }
+    val intArgs: List<Int> = args.map { Integer.valueOf(it) }
 
     val iterations = intArgs[0]
     val daysToSolve = intArgs.filterIndexed { i, _ ->
@@ -39,15 +39,14 @@ suspend fun main(args: Array<String>) {
                 20 -> day20()
                 21 -> day21()
                 22 -> day22()
-                24 -> day24()
                 25 -> day25()
             }
         }
         println("Done")
-    }*/
+    }
 
-    println("Solving")
-   /* println("---- Took ${measureTimeMillis{ day1() }} ms to execute ----")
+    /*println("Solving")
+    println("---- Took ${measureTimeMillis{ day1() }} ms to execute ----")
     println("---- Took ${measureTimeMillis{ day2() }} ms to execute ----")
     println("---- Took ${measureTimeMillis{ day3() }} ms to execute ----")
     println("---- Took ${measureTimeMillis{ day4() }} ms to execute ----")
@@ -64,14 +63,14 @@ suspend fun main(args: Array<String>) {
     println("---- Took ${measureTimeMillis{ day15() }} ms to execute ----")
     println("---- Took ${measureTimeMillis{ day16() }} ms to execute ----")
     println("---- Took ${measureTimeMillis{ day17() }} ms to execute ----")
-    println("---- Took ${measureTimeMillis{ day18() }} ms to execute ----")*/
+    println("---- Took ${measureTimeMillis{ day18() }} ms to execute ----")
     println("---- Took ${measureTimeMillis{ day19() }} ms to execute ----")
-    /*println("---- Took ${measureTimeMillis{ day20() }} ms to execute ----")
+    println("---- Took ${measureTimeMillis{ day20() }} ms to execute ----")
     println("---- Took ${measureTimeMillis{ day21() }} ms to execute ----")
     println("---- Took ${measureTimeMillis{ day22() }} ms to execute ----")
-    println("---- Took ${measureTimeMillis{ day24() }} ms to execute ----")*/
+    println("---- Took ${measureTimeMillis{ day24() }} ms to execute ----")
     println("---- Took ${measureTimeMillis{ day25() }} ms to execute ----")
-    println("Done")
+    println("Done")*/
 }
 
 fun readFile(fileName: String): List<String> {

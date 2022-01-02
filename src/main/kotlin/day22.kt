@@ -48,7 +48,7 @@ fun day22part1(lines: List<String>) {
 }
 
 fun day22part2(lines: List<String>) {
-    val answer = "TBD"
+    val answer = "---"
 
     println("22b: $answer")
 }
