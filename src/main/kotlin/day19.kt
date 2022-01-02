@@ -1,5 +1,3 @@
-import java.lang.Math.abs
-
 fun day19() {
     val lines: List<String> = readFile("day19.txt")
 
@@ -9,35 +7,9 @@ fun day19() {
 
 fun day19part1(lines: List<String>) {
     val scanner0 = initScanner0(lines.subList(0, lines.indexOf("--- scanner 1 ---")))
-
     val unknownRotationScanners = initUnknownRotationScanners(lines.subList(lines.indexOf("--- scanner 1 ---"), lines.size))
 
-    findBeaconDistances(scanner0)
-    unknownRotationScanners.forEach { findUnknownRotationScannerBeaconDistances(it) }
-
-    for (i in 0 until unknownRotationScanners.size) {
-        findOverlappers(scanner0, unknownRotationScanners[i])
-    }
-
-    for (i in 0 until unknownRotationScanners.size) {
-        findOverlappers(scanner0, unknownRotationScanners[i])
-    }
-
-    for (i in 0 until unknownRotationScanners.size) {
-        findOverlappers(scanner0, unknownRotationScanners[i])
-    }
-
-    for (i in 0 until unknownRotationScanners.size) {
-        findOverlappers(scanner0, unknownRotationScanners[i])
-    }
-
-    /*for (i in 0 until scanners.size - 1) {
-        for (j in i + 1 until scanners.size) {
-            if (scanners[i].position != null) {
-                findOverlappers(scanners[i], scanners[j])
-            }
-        }
-    }*/
+    findAllBeacons(scanner0, unknownRotationScanners)
 
     val answer = scanner0.beacons.size
 
@@ -45,9 +17,57 @@ fun day19part1(lines: List<String>) {
 }
 
 fun day19part2(lines: List<String>) {
-    val answer = "TBD"
+    val scanner0 = initScanner0(lines.subList(0, lines.indexOf("--- scanner 1 ---")))
+    val unknownRotationScanners = initUnknownRotationScanners(lines.subList(lines.indexOf("--- scanner 1 ---"), lines.size))
+
+    findAllBeacons(scanner0, unknownRotationScanners)
+
+    val scannerPositions = mutableListOf<Position>()
+    scannerPositions.add(scanner0.position)
+
+    unknownRotationScanners.forEach {
+        scannerPositions.add(it.position!!)
+    }
+
+    var maxManhattanDistance = -1
+
+    for (i in 0 until scannerPositions.size) {
+        for (j in 0 until scannerPositions.size) {
+            val manhattanDistance = findManhattanDistance(scannerPositions[i], scannerPositions[j])
+            if (manhattanDistance > maxManhattanDistance) {
+                maxManhattanDistance = manhattanDistance
+            }
+        }
+    }
+
+    val answer = maxManhattanDistance
 
     println("19b: $answer")
+}
+
+fun findManhattanDistance(s1: Position, s2: Position): Int {
+    return kotlin.math.abs(s1.x - s2.x) + kotlin.math.abs(s1.y - s2.y) + kotlin.math.abs(s1.z - s2.z)
+}
+
+fun findAllBeacons(scanner0: Scanner, unknownRotationScanners: List<UnknownRotationScanner>) {
+    findBeaconDistances(scanner0)
+    unknownRotationScanners.forEach { findUnknownRotationScannerBeaconDistances(it) }
+
+    for (element in unknownRotationScanners) {
+        findOverlappers(scanner0, element)
+    }
+
+    for (element in unknownRotationScanners) {
+        findOverlappers(scanner0, element)
+    }
+
+    for (element in unknownRotationScanners) {
+        findOverlappers(scanner0, element)
+    }
+
+    for (element in unknownRotationScanners) {
+        findOverlappers(scanner0, element)
+    }
 }
 
 fun findRelativePosition(o1: List<Beacon>, o2: List<Beacon>, s1: Scanner, beaconsToAdd: Set<Beacon>): Position {
@@ -76,9 +96,9 @@ fun findRelativePosition(o1: List<Beacon>, o2: List<Beacon>, s1: Scanner, beacon
     val z = if (addZ) { zAdd.first() } else { zSubtract.first() }
 
     val newPosition = Position(
-        x + s1.position!!.x,
-        y + s1.position!!.y,
-        z + s1.position!!.z
+        x + s1.position.x,
+        y + s1.position.y,
+        z + s1.position.z
     )
 
     beaconsToAdd.forEach {
@@ -103,17 +123,7 @@ fun findOverlappers(s1: Scanner, s2: UnknownRotationScanner) {
     s1.beacons.forEach { outer ->
         s2.possibleBeacons.forEach { middle ->
             middle.forEach { inner ->
-                /*val intersections: MutableList<List<Int>> = mutableListOf()
-                outer.distances.forEach { outerDist ->
-                    inner.distances.forEach { innerDist ->
-                        if (outerDist.containsAll(innerDist)) {
-                            intersections.add(outerDist)
-                        }
-                    }
-                }*/
-
                 val intersections = inner.distances.intersect(outer.distances.toSet())
-
                 if (intersections.size > 10 && !overlappers0.contains(outer)) {
                     overlappers0.add(outer)
                     overlappers1.add(inner)
@@ -138,7 +148,6 @@ fun findBeaconDistances(scanner: Scanner) {
             val xDist = kotlin.math.abs(outer.position.x - inner.position.x)
             val yDist = kotlin.math.abs(outer.position.y - inner.position.y)
             val zDist = kotlin.math.abs(outer.position.z - inner.position.z)
-            //outer.distances.add(listOf(xDist, yDist, zDist))
             outer.distances.add(BeaconDistance(xDist, yDist, zDist))
         }
     }
@@ -188,7 +197,7 @@ fun initUnknownRotationScanners(lines: List<String>): List<UnknownRotationScanne
     currentScanner!!.possibleBeacons = mutableListOf(beaconSet)
 
     scanners.forEach {
-        //region normal
+
         var additionalBeaconSet = mutableSetOf<Beacon>()
         it.possibleBeacons.toList()[0].forEach { beacon ->
             additionalBeaconSet.add(Beacon(Position(beacon.position.x, beacon.position.z, beacon.position.y), mutableListOf()))
@@ -218,123 +227,6 @@ fun initUnknownRotationScanners(lines: List<String>): List<UnknownRotationScanne
             additionalBeaconSet.add(Beacon(Position(beacon.position.z, beacon.position.y, beacon.position.x), mutableListOf()))
         }
         it.possibleBeacons.add(additionalBeaconSet)
-        //endregion
-/*
-        //region negative x
-        additionalBeaconSet = mutableSetOf()
-        it.possibleBeacons.toList()[0].forEach { beacon ->
-            additionalBeaconSet.add(Beacon(Position(beacon.position.x * -1, beacon.position.y, beacon.position.z), mutableListOf()))
-        }
-        it.possibleBeacons.add(additionalBeaconSet)
-
-        additionalBeaconSet = mutableSetOf()
-        it.possibleBeacons.toList()[0].forEach { beacon ->
-            additionalBeaconSet.add(Beacon(Position(beacon.position.x * -1, beacon.position.z, beacon.position.y), mutableListOf()))
-        }
-        it.possibleBeacons.add(additionalBeaconSet)
-
-        additionalBeaconSet = mutableSetOf()
-        it.possibleBeacons.toList()[0].forEach { beacon ->
-            additionalBeaconSet.add(Beacon(Position(beacon.position.y * -1, beacon.position.x, beacon.position.z), mutableListOf()))
-        }
-        it.possibleBeacons.add(additionalBeaconSet)
-
-        additionalBeaconSet = mutableSetOf()
-        it.possibleBeacons.toList()[0].forEach { beacon ->
-            additionalBeaconSet.add(Beacon(Position(beacon.position.y * -1, beacon.position.z, beacon.position.x), mutableListOf()))
-        }
-        it.possibleBeacons.add(additionalBeaconSet)
-
-        additionalBeaconSet = mutableSetOf()
-        it.possibleBeacons.toList()[0].forEach { beacon ->
-            additionalBeaconSet.add(Beacon(Position(beacon.position.z * -1, beacon.position.x, beacon.position.y), mutableListOf()))
-        }
-        it.possibleBeacons.add(additionalBeaconSet)
-
-        additionalBeaconSet = mutableSetOf()
-        it.possibleBeacons.toList()[0].forEach { beacon ->
-            additionalBeaconSet.add(Beacon(Position(beacon.position.z * -1, beacon.position.y, beacon.position.x), mutableListOf()))
-        }
-        it.possibleBeacons.add(additionalBeaconSet)
-        //endregion
-
-        //region negative y
-        additionalBeaconSet = mutableSetOf()
-        it.possibleBeacons.toList()[0].forEach { beacon ->
-            additionalBeaconSet.add(Beacon(Position(beacon.position.x, beacon.position.y * -1, beacon.position.z), mutableListOf()))
-        }
-        it.possibleBeacons.add(additionalBeaconSet)
-
-        additionalBeaconSet = mutableSetOf()
-        it.possibleBeacons.toList()[0].forEach { beacon ->
-            additionalBeaconSet.add(Beacon(Position(beacon.position.x, beacon.position.z * -1, beacon.position.y), mutableListOf()))
-        }
-        it.possibleBeacons.add(additionalBeaconSet)
-
-        additionalBeaconSet = mutableSetOf()
-        it.possibleBeacons.toList()[0].forEach { beacon ->
-            additionalBeaconSet.add(Beacon(Position(beacon.position.y, beacon.position.x * -1, beacon.position.z), mutableListOf()))
-        }
-        it.possibleBeacons.add(additionalBeaconSet)
-
-        additionalBeaconSet = mutableSetOf()
-        it.possibleBeacons.toList()[0].forEach { beacon ->
-            additionalBeaconSet.add(Beacon(Position(beacon.position.y, beacon.position.z * -1, beacon.position.x), mutableListOf()))
-        }
-        it.possibleBeacons.add(additionalBeaconSet)
-
-        additionalBeaconSet = mutableSetOf()
-        it.possibleBeacons.toList()[0].forEach { beacon ->
-            additionalBeaconSet.add(Beacon(Position(beacon.position.z, beacon.position.x * -1, beacon.position.y), mutableListOf()))
-        }
-        it.possibleBeacons.add(additionalBeaconSet)
-
-        additionalBeaconSet = mutableSetOf()
-        it.possibleBeacons.toList()[0].forEach { beacon ->
-            additionalBeaconSet.add(Beacon(Position(beacon.position.z, beacon.position.y * -1, beacon.position.x), mutableListOf()))
-        }
-        it.possibleBeacons.add(additionalBeaconSet)
-        //endregion
-
-        //region negative z
-        additionalBeaconSet = mutableSetOf()
-        it.possibleBeacons.toList()[0].forEach { beacon ->
-            additionalBeaconSet.add(Beacon(Position(beacon.position.x, beacon.position.y, beacon.position.z * -1), mutableListOf()))
-        }
-        it.possibleBeacons.add(additionalBeaconSet)
-
-        additionalBeaconSet = mutableSetOf()
-        it.possibleBeacons.toList()[0].forEach { beacon ->
-            additionalBeaconSet.add(Beacon(Position(beacon.position.x, beacon.position.z, beacon.position.y * -1), mutableListOf()))
-        }
-        it.possibleBeacons.add(additionalBeaconSet)
-
-        additionalBeaconSet = mutableSetOf()
-        it.possibleBeacons.toList()[0].forEach { beacon ->
-            additionalBeaconSet.add(Beacon(Position(beacon.position.y, beacon.position.x, beacon.position.z * -1), mutableListOf()))
-        }
-        it.possibleBeacons.add(additionalBeaconSet)
-
-        additionalBeaconSet = mutableSetOf()
-        it.possibleBeacons.toList()[0].forEach { beacon ->
-            additionalBeaconSet.add(Beacon(Position(beacon.position.y, beacon.position.z, beacon.position.x * -1), mutableListOf()))
-        }
-        it.possibleBeacons.add(additionalBeaconSet)
-
-        additionalBeaconSet = mutableSetOf()
-        it.possibleBeacons.toList()[0].forEach { beacon ->
-            additionalBeaconSet.add(Beacon(Position(beacon.position.z, beacon.position.x, beacon.position.y * -1), mutableListOf()))
-        }
-        it.possibleBeacons.add(additionalBeaconSet)
-
-        additionalBeaconSet = mutableSetOf()
-        it.possibleBeacons.toList()[0].forEach { beacon ->
-            additionalBeaconSet.add(Beacon(Position(beacon.position.z, beacon.position.y, beacon.position.x * -1), mutableListOf()))
-        }
-        it.possibleBeacons.add(additionalBeaconSet)
-        //endregion
-
- */
     }
 
     return scanners
@@ -375,16 +267,6 @@ class Beacon(val position: Position, var distances: MutableList<BeaconDistance>)
     }
 }
 
-/*class Beacon(val position: Position, var distances: MutableList<List<Int>>) {
-    override fun equals(other: Any?): Boolean {
-        return this::class == other!!::class && this.position == (other as Beacon).position
-    }
-
-    override fun hashCode(): Int {
-        return position.hashCode()
-    }
-}*/
-
-data class Scanner(val id: Int, val beacons: MutableSet<Beacon>, var position: Position?)
+data class Scanner(val id: Int, val beacons: MutableSet<Beacon>, var position: Position)
 
 data class UnknownRotationScanner(val id: Int, var possibleBeacons: MutableList<MutableSet<Beacon>>, var position: Position?)
